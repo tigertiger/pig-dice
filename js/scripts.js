@@ -1,8 +1,11 @@
+//testing version
 
 function Game(players, currentScore, currentPlayer) {
   this.players = {};
-  this.currentScore = 0;
-  this.currentPlayer = currentPlayer;
+  this.currentScore = currentScore;
+  this.currentPlayer = playerName;
+  // Some new property that just keeps track of the current active player. This could literally be an integer (1 or 2), it could be the current player (the entire object) or any other metric. 
+  // this.currentPlayer = 1 (this would mean player 1 is currently active.)
 }
 
 Game.prototype.addPlayer = function(player){
@@ -10,11 +13,11 @@ Game.prototype.addPlayer = function(player){
 };
 
 Game.prototype.assignTurn = function() {
-  let currentPlayer = player1;
-  for (let i = 0; i < players.length; i++) {
-  if (this.yourTurn === true) {
-  currentPlayer = this.playerName;
-  this.yourTurn === false;
+  this.currentPlayer = player1; // player1 is a global variable in the way you're using it here. Maybe this could be an integer
+  for (let i = 0; i < this.players.length; i++) {
+  if (this.currentPlayer === true) { // this.currentPlayer = 1
+  this.currentPlayer = this.playerName; // then set currentPlayer to 2
+  this.yourTurn === false; // vise versa
   } else {
   this.yourTurn === true;
   }
@@ -34,6 +37,49 @@ let player2 = new Player("Jafaar", 0, false);
 
 gameOne.addPlayer(player1);
 gameOne.addPlayer(player2);
+
+gameOne.assignTurn();
+
+//end of testing version/start of old version
+function Game(players, currentScore, currentPlayer) {
+  this.players = {};
+  this.currentScore = currentScore;
+  this.currentPlayer = currentPlayer;
+  // Some new property that just keeps track of the current active player. This could literally be an integer (1 or 2), it could be the current player (the entire object) or any other metric. 
+  // this.currentPlayer = 1 (this would mean player 1 is currently active.)
+}
+
+Game.prototype.addPlayer = function(player){
+  this.players[player.playerName] = player;
+};
+
+Game.prototype.assignTurn = function() {
+  this.currentPlayer = player1; // player1 is a global variable in the way you're using it here. Maybe this could be an integer
+  for (let i = 0; i < this.players.length; i++) {
+  if (this.yourTurn === true) { // this.currentPlayer = 1
+  this.currentPlayer = this.playerName; // then set currentPlayer to 2
+  this.yourTurn === false; // vise versa
+  } else {
+  this.yourTurn === true;
+  }
+}
+}
+
+function Player(playerName, cumulativeScore, yourTurn) {
+  this.playerName = playerName;
+  this.cumulativeScore = cumulativeScore;
+  this.yourTurn = yourTurn;
+}
+
+
+let gameOne = new Game();
+let player1 = new Player("Cody", 0, true);
+let player2 = new Player("Jafaar", 0, false);
+
+gameOne.addPlayer(player1);
+gameOne.addPlayer(player2);
+
+gameOne.assignTurn();
 
 //create a function that adds the players to the game. So addPlayer function.
 // we could then create a function that "finds a player" and makes it that players turn.
