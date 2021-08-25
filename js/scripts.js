@@ -1,10 +1,53 @@
 
-function Player(playerName, currentScore, cumulativeScore, yourTurn) {
+function Game(players, currentScore, currentPlayer) {
+  this.players = {};
+  this.currentScore = 0;
+  this.currentPlayer = currentPlayer;
+}
+
+Game.prototype.addPlayer = function(player){
+  this.players[player.playerName] = player;
+};
+
+Game.prototype.assignTurn = function() {
+  let currentPlayer = player1;
+  for (let i = 0; i < players.length; i++) {
+  if (this.yourTurn === true) {
+  currentPlayer = this.playerName;
+  this.yourTurn === false;
+  } else {
+  this.yourTurn === true;
+  }
+}
+}
+
+function Player(playerName, cumulativeScore, yourTurn) {
   this.playerName = playerName;
-  this.currentScore = currentScore;
   this.cumulativeScore = cumulativeScore;
   this.yourTurn = yourTurn;
 }
+
+
+let gameOne = new Game();
+let player1 = new Player("Cody", 0, true);
+let player2 = new Player("Jafaar", 0, false);
+
+gameOne.addPlayer(player1);
+gameOne.addPlayer(player2);
+
+//create a function that adds the players to the game. So addPlayer function.
+// we could then create a function that "finds a player" and makes it that players turn.
+// and then that could connect to our endTurn() function to tell it where to put the cumulative score pts????????
+// endTurn() would need to sum the scoreArray and put it in currentPts, then put currentPts into cumulative pts??
+// Do we even need current points, then?
+
+
+
+// const players = [
+//   {playerName: "Player One", cumulativeScore: 0},
+//   {playerName: "Player Two", cumulativeScore: 0}
+// ]
+
 
 let playerOne = {
   playerName: "Cody",
@@ -33,7 +76,7 @@ function rollDie() {
 let scoreArray = [];
 function score() {
   let val = rollDie();
-  let currentScore = playerOne.currentScore;
+  // let currentScore = playerOne.currentScore;
   if (val > 1){
     scoreArray.push(val);
     console.log(scoreArray); 
@@ -44,11 +87,11 @@ function score() {
   }
 }
 
-score(rollDie)
+let sum = scoreArray.reduce(function(a, b) {
+  return a +b;
+})
 
-function endTurn() {
 
-}
 
 // let scoreArray = [];
 // function score() {
