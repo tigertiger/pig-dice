@@ -2,10 +2,10 @@
 // this.player1 = !this.player1;
 
 
-//call it with this:
-gameOne.assignTurn();
+// call it with this:
+// gameOne.assignTurn();
 
-function Game(players, activePlayer) {
+function Game() {
   this.players = {};
   this.activePlayer = 1;
 }
@@ -17,6 +17,7 @@ function Game(players, activePlayer) {
 //   game.currentPlayer = "player1";
 // }
 
+// make scoreArray current score and have it dump points into cumulative score?
 Game.prototype.addPlayer = function(player){
   this.players[player.playerName] = player;
 };
@@ -33,21 +34,19 @@ Game.prototype.addPlayer = function(player){
 // }
 // }
 
-function Player(playerName, cumulativeScore, yourTurn) {
-  this.playerName = playerName;
-  this.cumulativeScore = cumulativeScore;
-  this.yourTurn = yourTurn;
+function Player() {
+  this.playerName = "";
+  this.cumulativeScore = 0;
+  this.currentScore = [];
+
+  // this.yourTurn = yourTurn;
 }
 
+// let gameOne = new Game();
+// gameOne.addPlayer(player1);
+// gameOne.addPlayer(player2);
 
-let gameOne = new Game();
-let player1 = new Player("Cody", 0, 1, true);
-let player2 = new Player("Jafaar", 0, 2, false);
-
-gameOne.addPlayer(player1);
-gameOne.addPlayer(player2);
-
-gameOne.assignTurn();
+// gameOne.assignTurn();
 
 
 // die roll function
@@ -60,18 +59,22 @@ Player.prototype.rollDie = function()  {
   return Math.floor(Math.random() * (max - min) + min);
 }
 
+
 Player.prototype.score = function() {
-  let scoreArray = [];
-  let val = rollDie();
+  // let scoreArray = [];
+  let val = this.rollDie();
   if (val > 1){
-    scoreArray.push(val);
-    console.log(scoreArray); 
- 
+    this.currentScore.push(val);
+    console.log(this.currentScore);
+    // this.currentScore = scoreArray.toString();
+    // this.currentScore.push(scoreArray);
+    // console.log(scoreArray); 
+
   } else {
-    scoreArray = [];
+    this.currentScore = [];
     console.log(val);
     alert("Your turn is over!");
-    Game.activePlayer = !Game.activePlayer;
+    // Game.activePlayer = !Game.activePlayer;
   } 
 }
 // game.player1 = !game.player1;
@@ -79,23 +82,56 @@ Player.prototype.score = function() {
 
 
 
-let sum = scoreArray.reduce(function(a, b) {
-  return a +b;
+// let sum = scoreArray.reduce(function(a, b) {
+//   return a +b;
+// });
+
+
+// Player.prototype.score = function(currentScore, yourTurn) {
+//   if (rollDie() > 1){
+//     this.currentScore += rollDie(); 
+//   } else {
+//     this.currentScore = 0;
+//     this.yourTurn = false;
+//   }
+// }
+
+// Player.prototype.turnDetermine = function(playerName) {
+//   if (this.players[yourTurn] === true) {
+//     return true;
+//   }
+//     return false;
+// }
+
+// UI Logic??
+
+
+
+$(document).ready(function() {
+  let player1 = new Player();
+  let player2 = new Player();
+  $("form#players").submit(function(event) {
+    event.preventDefault();
+    player1.playerName = $("input#player1").val();
+    player2.playerName = $("input#player2").val();
+    $("#playerOneScore").text(player1.cumulativeScore);
+    $("#playerTwoScore").text(player2.cumulativeScore);
+    $("#player1Name").text(player1.playerName);
+    $("#player2Name").text(player2.playerName);
+
+  });
+
+  $("#playerOneRoll").on("click",function(){
+    player1.score();
+    $("#player1RollScore").text(player1.currentScore);
+  });
+
+  console.log(this.scoreArray);
+  $("#playerTwoRoll").on("click",function(){
+    player2.score();
+    $("#player2RollScore").text(player2.currentScore);
+  });
+  
+  
+  console.log(this.scoreArray);
 })
-
-
-Player.prototype.score = function(currentScore, yourTurn) {
-  if (rollDie() > 1){
-    this.currentScore += rollDie(); 
-  } else {
-    this.currentScore = 0;
-    this.yourTurn = false;
-  }
-}
-
-Player.prototype.turnDetermine = function(playerName) {
-  if (this.players[yourTurn] === true) {
-    return true;
-  }
-    return false;
-}
