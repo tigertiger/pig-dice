@@ -78,4 +78,8 @@ $(document).ready(function() {
   
   
   console.log(this.scoreArray);
+
+  $("#startOver").click(function() {
+    location.reload();
+  })
 })

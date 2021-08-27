@@ -58,3 +58,8 @@ h5 {
   .playerScores {
     padding:20px 0px;
   }
+
+  #startOver {
+    margin:15px 0px 0px 0px;
+    text-align:center;
+  }
