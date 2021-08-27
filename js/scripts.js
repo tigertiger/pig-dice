@@ -60,6 +60,8 @@ $(document).ready(function() {
     $("#playerTwoScore").text(player2.cumulativeScore);
     $("#player1Name").text(player1.playerName);
     $("#player2Name").text(player2.playerName);
+    $("#topContent").hide();
+    $("#bottomContent").show();
 
   });
 
